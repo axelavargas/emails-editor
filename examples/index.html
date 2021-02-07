@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Small Example using custom emails-editor library</p>
+    <div id="emails-input"></div>
+
+    <script src="../dist/emails-editors.bundle.js"></script>
+    <script>
+      var inputContainerNode = document.querySelector('#emails-input');
+      const emailsInput = new EmailsEditor(inputContainerNode);
+    </script>
+  </body>
+</html>
