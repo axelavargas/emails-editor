@@ -1,10 +1,12 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    emailsEditor: './src/index.js',
   },
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
@@ -12,6 +14,7 @@ module.exports = {
       title: 'Emails Editor',
       template: './src/index.html',
     }),
+    new MiniCssExtractPlugin()
   ],
   module: {
     rules: [
@@ -24,6 +27,10 @@ module.exports = {
             presets: [['@babel/preset-env', { targets: 'defaults' }]],
           },
         },
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },

@@ -1,3 +1,5 @@
+require('./emails-editor-style.css')
+
 /**
  * ------------------------------------------------------------------------
  * Class Definition
@@ -28,7 +30,7 @@ class EmailsEditor {
         // add x next to the new email tag
         const closeXElement = document.createElement("span");
         closeXElement.innerText = "x";
-        closeXElement.style.padding = "10px";
+        closeXElement.style.paddingLeft = "14px";
 
         newEmailElement.appendChild(closeXElement);
 
@@ -93,15 +95,26 @@ class EmailsEditor {
         });
     }
 
+    _generateRandomId(prefix) {
+        return prefix + '-' + Math.random().toString(20).substr(2, 5)
+    }
+
     // Public
     init() {
+        this.container.className = "emails-input"
+
         // It will render the list of emails
         const listEmails = document.createElement("div");
-        listEmails.id = "list-emails";
+        const listEmailId = this._generateRandomId("list-emails");
+        listEmails.id = listEmailId;
+        listEmails.className = "list-emails";
 
         // Input to collect the emails
+
         const emailFormInput = document.createElement("input");
-        emailFormInput.id = "email-form";
+        const inputEmailId = this._generateRandomId("email-input-form");
+        emailFormInput.id = inputEmailId;
+        emailFormInput.autofocus = true;
 
         // create html structure
         listEmails.appendChild(emailFormInput);
@@ -111,5 +124,6 @@ class EmailsEditor {
         this.addEvents(listEmails, emailFormInput);
     }
 }
+
 
 module.exports = EmailsEditor;
