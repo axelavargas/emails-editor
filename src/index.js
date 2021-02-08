@@ -46,10 +46,9 @@ class EmailsEditor {
         return this.EMAIL_REGEX.test(value)
     }
 
-    _createEmailBlock(EmailFormInput, ListEmails) {
-        const emailValue = EmailFormInput.value;
-        const newEmail = { value: emailValue };
-        newEmail.isValid = this._isValidEmail(emailValue);
+    _createEmailBlock(sanitizedEmailValue, ListEmails) {
+        const newEmail = { value: sanitizedEmailValue };
+        newEmail.isValid = this._isValidEmail(sanitizedEmailValue);
         return (
             this._createNewEmailTag(
                 newEmail,
@@ -57,16 +56,40 @@ class EmailsEditor {
             ));
     }
 
+    _createEmailListTags(emailFormInput, EmailFormInputValue, listEmails) {
+        // remove white spaces and split by commas
+        const sanitizedEmailValues = EmailFormInputValue.trim().split(',');
+        sanitizedEmailValues.forEach(email => {
+            if (email) {
+                const newEmailLi = this._createEmailBlock(email, listEmails);
+                listEmails.insertBefore(newEmailLi, emailFormInput);
+            }
+        })
+        emailFormInput.value = "";
+    }
+
     addEvents(listEmails, emailFormInput) {
         // Execute a function when the user releases a key on the keyboard
         emailFormInput.addEventListener("keyup", (event) => {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                const newEmailLi = this._createEmailBlock(emailFormInput, listEmails);
-                listEmails.insertBefore(newEmailLi, emailFormInput);
-                // reset value
-                emailFormInput.value = "";
+            //to avoid keyup events during IME composition on Firefox 65+
+            if (event.isComposing || event.keyCode === 229) {
+                return;
             }
+            const EmailFormInputValue = emailFormInput.value;
+            // do not allow empty values
+            if (!EmailFormInputValue) return false;
+
+            if (event.keyCode === 13 || event.keyCode === 188) {
+                event.preventDefault();
+                this._createEmailListTags(emailFormInput, EmailFormInputValue, listEmails)
+            }
+        });
+        emailFormInput.addEventListener('blur', (event) => {
+            event.preventDefault();
+            const EmailFormInputValue = emailFormInput.value;
+            // do not allow empty values
+            if (!EmailFormInputValue) return false;
+            this._createEmailListTags(emailFormInput, EmailFormInputValue, listEmails)
         });
     }
 
