@@ -32,10 +32,21 @@ input {
   color: #050038;
   margin-right: 8px;
   padding: 0 10px;
+  cursor: pointer;
+  display: flex;
 }
 
 .error {
   border-bottom: 1px dashed #d92929;
   margin-right: 8px;
+  cursor: pointer;
+  display: flex;
+}
+
+.delete-button:hover {
+  color: rgba(5, 0, 56, 1);
+  transform: scale(1.2);
+  transition-duration: 0.3s;
+  transform-origin: 0 1;
 }
 

@@ -1,17 +1,12 @@
 require('../emails-editor-style.css');
 const { isValidEmail } = require('../utils/validations');
+const { generateRandomId } = require('../utils/index');
 
-const addEmailBlockEvents = (closeXElement, ListEmailsDomElement, newEmailElement) => {
-    // add event to allow deletion of the new email element
-    closeXElement.addEventListener("click", (e) => {
-        e.preventDefault();
-        ListEmailsDomElement.removeChild(newEmailElement);
-        // TODO EDIT: allow email block
-    });
-}
+const renderEmailTag = (newEmail) => {
+    const newEmailElement = document.createElement("div");
 
-const renderEmailTag = (newEmail, ListEmailsDomElement) => {
-    const newEmailElement = document.createElement("span");
+    const emailIdIdentifier = generateRandomId();
+    newEmailElement.dataset.emailId = emailIdIdentifier;
 
     // add visual error if email is not valid
     if (!newEmail.isValid) {
@@ -23,13 +18,13 @@ const renderEmailTag = (newEmail, ListEmailsDomElement) => {
     newEmailElement.innerText = newEmail.value;
 
     // add x next to the new email tag
-    const closeXElement = document.createElement("span");
+    const closeXElement = document.createElement("div");
     closeXElement.innerText = "x";
+    closeXElement.classList = "delete-button";
+    closeXElement.dataset.deleteIdentifierEmailId = emailIdIdentifier;
     closeXElement.style.paddingLeft = "14px";
 
     newEmailElement.appendChild(closeXElement);
-
-    addEmailBlockEvents(closeXElement, ListEmailsDomElement, newEmailElement);
 
     return newEmailElement;
 }
