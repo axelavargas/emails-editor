@@ -22,10 +22,14 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: [['@babel/preset-env', { targets: 'defaults' }]],
-          },
+            presets: ["@babel/preset-env"],
+            plugins: [
+              require("@babel/plugin-transform-arrow-functions"),
+              require("@babel/plugin-transform-modules-commonjs")
+            ]
+          }
         },
       },
       {
@@ -39,7 +43,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src')],
   },
   output: {
-    filename: 'emails-editors.bundle.js',
+    filename: '[name].bundle.js',
     library: 'EmailsEditor',
     path: path.resolve(__dirname, 'dist'),
   },

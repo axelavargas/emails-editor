@@ -3,24 +3,24 @@ const { isValidEmail } = require('../utils/validations');
 const { generateRandomId } = require('../utils/index');
 
 const renderEmailTag = (newEmail, emailIdIdentifier) => {
-    const newEmailElement = document.createElement("div");
+    const newEmailElement = document.createElement('div');
+    newEmailElement.classList.add('emailsEditor__email');
     newEmailElement.dataset.emailId = emailIdIdentifier;
 
     // add visual error if email is not valid
     if (!newEmail.isValid) {
-        newEmailElement.className = "error";
+        newEmailElement.classList.add('emailsEditor__email--error');
     } else {
-        newEmailElement.className = "tag";
+        newEmailElement.classList.add('emailsEditor__email--tag');
     }
 
     newEmailElement.innerText = newEmail.value;
 
     // add x next to the new email tag
-    const closeXElement = document.createElement("div");
-    closeXElement.innerText = "x";
-    closeXElement.classList = "delete-button";
+    const closeXElement = document.createElement('div');
+    closeXElement.innerText = 'x';
+    closeXElement.classList.add('emailsEditor__delete-button');
     closeXElement.dataset.deleteIdentifierEmailId = emailIdIdentifier;
-    closeXElement.style.paddingLeft = "14px";
 
     newEmailElement.appendChild(closeXElement);
 

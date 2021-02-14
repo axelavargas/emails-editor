@@ -1,52 +1,55 @@
-.emails-input {
+.emailsEditor {
   background: #ffffff;
   border: 1px solid #c3c2cf;
   box-sizing: border-box;
   border-radius: 4px;
   padding: 8px 7px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: inherit;
+  max-height: inherit;
 }
 
-input {
+.emailsEditor__input {
   border: none;
   outline: none;
+  max-height: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  align-self: stretch;
+  flex-grow: 1;
 }
 
-.list-emails {
+.emailsEditor__list {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
 }
 
-.placeholder {
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 24px;
+.emailsEditor__email {
+  color: #050038;
+  margin: 0 8px 4px 0;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
 }
 
-.tag {
+.emailsEditor__email--tag {
   background: rgba(102, 153, 255, 0.2);
   border-radius: 100px;
-  color: #050038;
-  margin-right: 8px;
-  padding: 0 10px;
-  cursor: pointer;
-  display: flex;
 }
 
-.error {
+.emailsEditor__email--error {
   border-bottom: 1px dashed #d92929;
-  margin-right: 8px;
-  cursor: pointer;
-  display: flex;
 }
 
-.delete-button:hover {
+.emailsEditor__delete-button {
+  padding-left: 14px;
+}
+
+.emailsEditor__delete-button:hover {
   color: rgba(5, 0, 56, 1);
-  transform: scale(1.2);
-  transition-duration: 0.3s;
-  transform-origin: 0 1;
 }
 

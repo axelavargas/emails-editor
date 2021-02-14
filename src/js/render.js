@@ -7,17 +7,18 @@ const { generateRandomId } = require('../utils');
  */
 const renderEditorComponent = (DomEmailEditorContainer) => {
     // It will render the list of emails
-    DomEmailEditorContainer.className = "emails-input"
+    DomEmailEditorContainer.classList.add('emailsEditor')
 
-    const listEmails = document.createElement("div");
-    const listEmailId = generateRandomId("list-emails");
+    const listEmails = document.createElement('div');
+    const listEmailId = generateRandomId('list-emails');
     listEmails.id = listEmailId;
-    listEmails.className = "list-emails";
+    listEmails.classList.add('emailsEditor__list');
 
     // Input to collect the emails
-    const emailFormInput = document.createElement("input");
-    const inputEmailId = generateRandomId("email-input-form");
+    const emailFormInput = document.createElement('input');
+    const inputEmailId = generateRandomId('email-input');
     emailFormInput.id = inputEmailId;
+    emailFormInput.classList.add('emailsEditor__input');
     emailFormInput.autofocus = true;
 
     // create html structure
@@ -25,14 +26,14 @@ const renderEditorComponent = (DomEmailEditorContainer) => {
     DomEmailEditorContainer.appendChild(listEmails);
 
     return {
-        listEmails,
-        emailFormInput
+        listDom: listEmails,
+        inputDom: emailFormInput
     }
 }
 
-const renderEmailListBlocks = (emailFormInput, EmailFormInputValue, domListEmails, addNewEmailEntry) => {
+const renderEmailListBlocks = (emailFormInput, value, domListEmails, addNewEmailEntry) => {
     // remove white spaces and split by commas
-    const sanitizedEmailValues = EmailFormInputValue.trim().split(',');
+    const sanitizedEmailValues = value.trim().split(',');
     sanitizedEmailValues.forEach(email => {
         if (email) {
             const { newDomEmail, newEntryEmail } = createEmailBlock(email, domListEmails);
@@ -40,7 +41,7 @@ const renderEmailListBlocks = (emailFormInput, EmailFormInputValue, domListEmail
             domListEmails.insertBefore(newDomEmail, emailFormInput);
         }
     })
-    emailFormInput.value = "";
+    emailFormInput.value = '';
 }
 
 

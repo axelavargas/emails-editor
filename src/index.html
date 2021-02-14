@@ -11,10 +11,7 @@
     <script>
       window.onload = function () {
         const inputContainerNode = document.querySelector('#emails-input');
-        const onChange = (emails) => {
-          console.log(emails);
-        };
-        const emailsInput = EmailsEditor(inputContainerNode, onChange);
+        const emailsInput = EmailsEditor(inputContainerNode);
       };
     </script>
   </body>
