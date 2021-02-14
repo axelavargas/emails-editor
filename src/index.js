@@ -2,7 +2,8 @@
 require('./emails-editor-style.css');
 const { renderEditorComponent, renderEmailListBlocks } = require('./js/render');
 
-function EmailsEditor(container) {
+function EmailsEditor(container, onChange) {
+    let emails = [];
 
     const init = () => {
         // render email editor
@@ -11,15 +12,30 @@ function EmailsEditor(container) {
         _addEmailsEditorEvents(listEmails, emailFormInput);
     }
 
+    // Methods to handle email data state
+
+    const _addEmailEntry = (newEntryEmail) => {
+        emails.push(newEntryEmail)
+        onChange(emails);
+    }
+
+    const _removeEmailEntry = (newEntryEmailId) => {
+        emails = emails.filter(email => email.id !== newEntryEmailId)
+        onChange(emails);
+    }
+
+    // Add emails to the dom
+
     const _addEmailsEditorEvents = (listEmails, emailFormInput) => {
         // Execute a function when the user releases a key on the keyboard
-
         emailFormInput.addEventListener("keydown", (event) => {
             if (event.code === 'Backspace') {
                 const refEmails = container.querySelectorAll(`[data-email-id]`);
                 const lastEmailAdded = refEmails[refEmails.length - 1];
+                const emailToDeleteId = lastEmailAdded.dataset.emailId;
                 if (lastEmailAdded) {
                     lastEmailAdded.remove();
+                    _removeEmailEntry(emailToDeleteId);
                 }
             }
 
@@ -34,7 +50,7 @@ function EmailsEditor(container) {
             // add emails when enter or comma
             if (event.code === 'Enter' || event.keyCode === 188) {
                 event.preventDefault();
-                renderEmailListBlocks(emailFormInput, EmailFormInputValue, listEmails)
+                renderEmailListBlocks(emailFormInput, EmailFormInputValue, listEmails, _addEmailEntry)
             }
         });
 
@@ -43,7 +59,7 @@ function EmailsEditor(container) {
             const EmailFormInputValue = emailFormInput.value;
             // do not allow empty values
             if (!EmailFormInputValue) return false;
-            renderEmailListBlocks(emailFormInput, EmailFormInputValue, listEmails)
+            renderEmailListBlocks(emailFormInput, EmailFormInputValue, listEmails, _addEmailEntry)
         });
 
         // Email actions delete or edit
@@ -57,6 +73,7 @@ function EmailsEditor(container) {
                 const emailToDeleteDomElement = container.querySelector(`[data-email-id="${closeButtonDomReference}"]`);
                 if (emailToDeleteDomElement) {
                     listEmails.removeChild(emailToDeleteDomElement);
+                    _removeEmailEntry(closeButtonDomReference);
                 }
             }
 
@@ -72,7 +89,7 @@ function EmailsEditor(container) {
         });
     }
 
-    return init()
+    return init();
 }
 
 module.exports = EmailsEditor;

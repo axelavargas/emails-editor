@@ -2,10 +2,8 @@ require('../emails-editor-style.css');
 const { isValidEmail } = require('../utils/validations');
 const { generateRandomId } = require('../utils/index');
 
-const renderEmailTag = (newEmail) => {
+const renderEmailTag = (newEmail, emailIdIdentifier) => {
     const newEmailElement = document.createElement("div");
-
-    const emailIdIdentifier = generateRandomId();
     newEmailElement.dataset.emailId = emailIdIdentifier;
 
     // add visual error if email is not valid
@@ -29,15 +27,17 @@ const renderEmailTag = (newEmail) => {
     return newEmailElement;
 }
 
-function createEmailBlock(sanitizedEmailValue, ListEmailsDomElement) {
-    const newEmail = { value: sanitizedEmailValue };
-    newEmail.isValid = isValidEmail(sanitizedEmailValue);
-    return (
-        renderEmailTag(
-            newEmail,
-            ListEmailsDomElement
-        ));
+function createEmailBlock(sanitizedEmailValue) {
+    const emailIdIdentifier = generateRandomId();
+    const newEntryEmail = { value: sanitizedEmailValue };
+    newEntryEmail.isValid = isValidEmail(sanitizedEmailValue);
+    newEntryEmail.id = emailIdIdentifier;
 
+    const newDomEmail = renderEmailTag(
+        newEntryEmail,
+        emailIdIdentifier,
+    );
+    return { newEntryEmail, newDomEmail };
 }
 
 module.exports = createEmailBlock;

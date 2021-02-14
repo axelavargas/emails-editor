@@ -30,13 +30,14 @@ const renderEditorComponent = (DomEmailEditorContainer) => {
     }
 }
 
-const renderEmailListBlocks = (emailFormInput, EmailFormInputValue, listEmails) => {
+const renderEmailListBlocks = (emailFormInput, EmailFormInputValue, domListEmails, addNewEmailEntry) => {
     // remove white spaces and split by commas
     const sanitizedEmailValues = EmailFormInputValue.trim().split(',');
     sanitizedEmailValues.forEach(email => {
         if (email) {
-            const newEmailLi = createEmailBlock(email, listEmails);
-            listEmails.insertBefore(newEmailLi, emailFormInput);
+            const { newDomEmail, newEntryEmail } = createEmailBlock(email, domListEmails);
+            addNewEmailEntry(newEntryEmail)
+            domListEmails.insertBefore(newDomEmail, emailFormInput);
         }
     })
     emailFormInput.value = "";
