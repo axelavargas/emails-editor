@@ -1,6 +1,5 @@
 require('../emails-editor-style.css');
 const createEmailBlock = require('./email-tag');
-const { generateRandomId } = require('../utils');
 
 /**
  * 
@@ -10,14 +9,10 @@ const renderEditorComponent = (DomEmailEditorContainer) => {
     DomEmailEditorContainer.classList.add('emailsEditor')
 
     const listEmails = document.createElement('div');
-    const listEmailId = generateRandomId('list-emails');
-    listEmails.id = listEmailId;
     listEmails.classList.add('emailsEditor__list');
 
     // Input to collect the emails
     const emailFormInput = document.createElement('input');
-    const inputEmailId = generateRandomId('email-input');
-    emailFormInput.id = inputEmailId;
     emailFormInput.classList.add('emailsEditor__input');
     emailFormInput.autofocus = true;
 

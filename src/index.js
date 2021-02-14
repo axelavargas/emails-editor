@@ -20,15 +20,18 @@ function EmailsEditor(container, onChange = null) {
         renderEmailListBlocks(inputDomElement, value, listDomElement, _onAddEmailEntry)
     }
 
-    const removeEntryEmailById = (emailId) => {
+    const getEmails = () => {
+        //clone to not expose internal state
+        return emails.map(e => Object.assign({}, e));
+    }
+
+    const _removeEntryEmailById = (emailId) => {
         const emailToDeleteDomElement = container.querySelector(`[data-email-id='${emailId}']`);
         if (emailToDeleteDomElement) {
             listDomElement.removeChild(emailToDeleteDomElement);
             _removeEmailEntry(emailId);
         }
     }
-
-    // Methods to handle email data state
 
     const _onAddEmailEntry = (newEntryEmail) => {
         emails.push(newEntryEmail)
@@ -39,30 +42,14 @@ function EmailsEditor(container, onChange = null) {
 
     const _removeEmailEntry = (newEntryEmailId) => {
         emails = emails.filter(email => email.id !== newEntryEmailId)
-        onChange(emails);
+        if (onChange) {
+            onChange(emails);
+        }
     }
 
-    // Add emails to the dom
-
     const _addEmailsEditorEvents = (listDomElement, inputDomElement) => {
-        // Execute a function when the user releases a key on the keyboard
         inputDomElement.addEventListener('keydown', (event) => {
-            if (event.code === 'Backspace') {
-                const refEmails = container.querySelectorAll('[data-email-id]');
-                const lastEmailAdded = refEmails[refEmails.length - 1];
-                const emailToDeleteId = lastEmailAdded.dataset.emailId;
-                if (lastEmailAdded) {
-                    lastEmailAdded.remove();
-                    _removeEmailEntry(emailToDeleteId);
-                }
-            }
-
-            //to avoid keyup events during IME composition on Firefox 65+
-            if (event.isComposing || event.keyCode === 229) {
-                return;
-            }
             const value = inputDomElement.value;
-            // do not allow empty values
             if (!value) return false;
 
             // add emails when enter or comma
@@ -75,7 +62,6 @@ function EmailsEditor(container, onChange = null) {
         inputDomElement.addEventListener('blur', (event) => {
             event.preventDefault();
             const value = inputDomElement.value;
-            // do not allow empty values
             if (!value) return false;
             renderEmailListBlocks(inputDomElement, value, listDomElement, _onAddEmailEntry)
         });
@@ -88,17 +74,17 @@ function EmailsEditor(container, onChange = null) {
             // Delete an email
             const closeButtonDomReference = targetDomElement?.dataset?.deleteIdentifierEmailId;
             if (closeButtonDomReference) {
-                removeEntryEmailById(closeButtonDomReference);
+                _removeEntryEmailById(closeButtonDomReference);
             }
 
-            // Edit an email
-            const editActionDomReference = targetDomElement?.dataset?.emailId;
-            if (editActionDomReference) {
-                const emailToEditDomElement = container.querySelector(`[data-email-id='${editActionDomReference}']`);
-                if (emailToEditDomElement) {
-                    console.log('i am going to edit');
-                }
-            }
+            // Todo: Edit an email
+            // const editActionDomReference = targetDomElement?.dataset?.emailId;
+            // if (editActionDomReference) {
+            //     const emailToEditDomElement = container.querySelector(`[data-email-id='${editActionDomReference}']`);
+            //     if (emailToEditDomElement) {
+            //         console.log('i am going to edit');
+            //     }
+            // }
 
         });
     }
@@ -106,9 +92,8 @@ function EmailsEditor(container, onChange = null) {
     init();
 
     return {
-        emails,
         add: handleNewEntryEmail,
-        remove: removeEntryEmailById,
+        getEmails: getEmails
     }
 }
 

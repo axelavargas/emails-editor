@@ -19,7 +19,7 @@ function init() {
 
     getEmailCount.addEventListener('click', function (e) {
         e.preventDefault();
-        var validEmails = inputEmails.emails.filter(function (email) { return email.isValid });
+        var validEmails = inputEmails.getEmails()?.filter(function (email) { return email.isValid });
         alert('Valid emails count ' + validEmails.length);
     })
 }
