@@ -2,7 +2,7 @@ require('../emails-editor-style.css');
 const { isValidEmail } = require('../utils/validations');
 const { generateRandomId } = require('../utils/index');
 
-const renderEmailTag = (newEmail, emailIdIdentifier) => {
+const renderEmailBlock = (newEmail, emailIdIdentifier) => {
     const newEmailElement = document.createElement('div');
     newEmailElement.classList.add('emailsEditor__email');
     newEmailElement.dataset.emailId = emailIdIdentifier;
@@ -33,7 +33,7 @@ function createEmailBlock(sanitizedEmailValue) {
     newEntryEmail.isValid = isValidEmail(sanitizedEmailValue);
     newEntryEmail.id = emailIdIdentifier;
 
-    const newDomEmail = renderEmailTag(
+    const newDomEmail = renderEmailBlock(
         newEntryEmail,
         emailIdIdentifier,
     );

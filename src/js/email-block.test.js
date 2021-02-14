@@ -1,4 +1,4 @@
-import createEmailBlock from './email-tag'
+import createEmailBlock from './email-block'
 describe("email tag tests", () => {
 
     it('should render a valid email block', () => {

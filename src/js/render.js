@@ -1,5 +1,4 @@
 require('../emails-editor-style.css');
-const createEmailBlock = require('./email-tag');
 
 /**
  * 
@@ -26,18 +25,5 @@ const renderEditorComponent = (DomEmailEditorContainer) => {
     }
 }
 
-const renderEmailListBlocks = (emailFormInput, value, domListEmails, addNewEmailEntry) => {
-    // remove white spaces and split by commas
-    const sanitizedEmailValues = value.trim().split(',');
-    sanitizedEmailValues.forEach(email => {
-        if (email) {
-            const { newDomEmail, newEntryEmail } = createEmailBlock(email, domListEmails);
-            addNewEmailEntry(newEntryEmail)
-            domListEmails.insertBefore(newDomEmail, emailFormInput);
-        }
-    })
-    emailFormInput.value = '';
-}
 
-
-module.exports = { renderEditorComponent, renderEmailListBlocks };
+module.exports = { renderEditorComponent };
