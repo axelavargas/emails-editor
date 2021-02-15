@@ -3,7 +3,7 @@ require('./emails-editor-style.css');
 const { renderEditorComponent } = require('./js/render');
 const { addNewEmailEntry } = require('./js/email-list');
 
-const { handleEmailListEvents, handleInputEnterEvents, handleInputBlurEvents } = require('./js/events');
+const { handleEmailListEvents, handleInputEnterEvents, handleInputBlurEvents, handleInputPasteEvents } = require('./js/events');
 
 
 function EmailsEditor(container, onChange = null) {
@@ -32,8 +32,10 @@ function EmailsEditor(container, onChange = null) {
     const _addEmailsEditorEvents = (listDomElement, inputDomElement) => {
         inputDomElement.addEventListener('keydown', (event) => handleInputEnterEvents(event, inputDomElement, listDomElement, emails, onChange));
         inputDomElement.addEventListener('blur', (event) => handleInputBlurEvents(event, inputDomElement, listDomElement, emails, onChange));
+        inputDomElement.addEventListener('paste', (event) => handleInputPasteEvents(event, inputDomElement, listDomElement, emails, onChange));
+
         // Email actions delete or edit
-        listDomElement.addEventListener('click', (event) => handleEmailListEvents(event, container, listDomElement));
+        listDomElement.addEventListener('click', (event) => handleEmailListEvents(event, container, listDomElement, emails, onChange));
     }
 
     init();

@@ -1,13 +1,13 @@
 const { removeEntryEmailById, addNewEmailEntry } = require('./email-list');
 
-const handleEmailListEvents = (event, container, listDomElement) => {
+const handleEmailListEvents = (event, container, listDomElement, emails, onChange) => {
     event.preventDefault();
     const targetDomElement = event.target;
 
     // Delete an email
     const closeButtonDomReference = targetDomElement?.dataset?.deleteIdentifierEmailId;
     if (closeButtonDomReference) {
-        removeEntryEmailById(closeButtonDomReference, container, listDomElement);
+        removeEntryEmailById(closeButtonDomReference, container, listDomElement, emails, onChange);
     }
 
     // Todo: Edit an email
@@ -30,6 +30,11 @@ const handleInputEnterEvents = (event, inputDomElement, listDomElement, emails, 
         addNewEmailEntry(inputDomElement, value, listDomElement, emails, onChange)
     }
 }
+const handleInputPasteEvents = (event, inputDomElement, listDomElement, emails, onChange) => {
+    let paste = (event.clipboardData || window.clipboardData).getData('Text');
+    addNewEmailEntry(inputDomElement, paste, listDomElement, emails, onChange)
+    event.preventDefault();
+};
 
 const handleInputBlurEvents = (event, inputDomElement, listDomElement, emails, onChange) => {
     event.preventDefault();
@@ -39,4 +44,4 @@ const handleInputBlurEvents = (event, inputDomElement, listDomElement, emails, o
 };
 
 
-module.exports = { handleEmailListEvents, handleInputEnterEvents, handleInputBlurEvents }
+module.exports = { handleEmailListEvents, handleInputEnterEvents, handleInputBlurEvents, handleInputPasteEvents }

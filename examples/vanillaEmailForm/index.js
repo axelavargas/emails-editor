@@ -1,6 +1,10 @@
 
 //written in es5 to be compatible with IE11
 
+function getRandomEmail() {
+    return Math.random().toString(36).substring(2, 11) + '@mail.com';
+}
+
 function init() {
     var inputContainerNode = document.querySelector('#emails-input');
     var onChange = function (emails) {
@@ -13,7 +17,7 @@ function init() {
 
     addEmailButton.addEventListener('click', function (e) {
         e.preventDefault();
-        var randomEmail = 'alexa1866@gmail.com';
+        var randomEmail = getRandomEmail();
         inputEmails.add(randomEmail);
     })
 
