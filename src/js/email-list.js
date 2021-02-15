@@ -1,5 +1,6 @@
 
 const createEmailBlock = require('./email-block');
+const { findEmailIndex } = require('../utils/index');
 
 const removeEntryEmailById = (emailId, container, listDomElement, emails, onChange) => {
     const emailToDeleteDomElement = container.querySelector(`[data-email-id='${emailId}']`);
@@ -10,7 +11,7 @@ const removeEntryEmailById = (emailId, container, listDomElement, emails, onChan
 }
 
 const _removeEmailEntry = (newEntryEmailId, emails, onChange) => {
-    const index = emails.findIndex(email => email.id === newEntryEmailId);
+    const index = findEmailIndex(emails, newEntryEmailId);
     emails.splice(index, 1);
 
     if (onChange) {
