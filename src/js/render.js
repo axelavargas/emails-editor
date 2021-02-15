@@ -14,6 +14,7 @@ const renderEditorComponent = (DomEmailEditorContainer) => {
     const emailFormInput = document.createElement('input');
     emailFormInput.classList.add('emailsEditor__input');
     emailFormInput.autofocus = true;
+    emailFormInput.placeholder = 'add more people';
 
     // create html structure
     listEmails.appendChild(emailFormInput);

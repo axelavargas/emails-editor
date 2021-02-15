@@ -19,6 +19,11 @@
   white-space: nowrap;
   align-self: stretch;
   flex-grow: 1;
+  font-size: 14px;
+}
+
+.emailsEditor__input::placeholder {
+  color: #c3c2cf;
 }
 
 .emailsEditor__list {

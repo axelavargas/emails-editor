@@ -25,7 +25,7 @@ The library Allows to collect and delete emails using an input editor.
 
 ![Demo](EmailsEditorDemo.gif)
 
-Check out the example [link](https://axelavargas.github.io/emails-editor/)
+Check out the example [link](https://axelavargas.github.io/emails-editor/examples/vanillaEmailForm/)
 
 ## Usage
 
@@ -102,7 +102,9 @@ With the instance created, you can access the emails data collected using this f
 
 ## Examples
 
-- [Vanilla Email Form ](./examples/vanillaEmailForm)
+- Vanilla Email Form: [Source ](./examples/vanillaEmailForm) | [Demo](https://axelavargas.github.io/emails-editor/examples/vanillaEmailForm/)
+
+- Multiple Emails Editor: [Source ](./examples/multipleEmailsEditor) | [Demo](https://axelavargas.github.io/emails-editor/examples/multipleEmailsEditor/)
 
 ## Contributing
 

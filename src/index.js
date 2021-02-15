@@ -26,7 +26,7 @@ function EmailsEditor(container, onChange = null) {
 
     const getEmails = () => {
         //clone to not expose internal state
-        return emails.map(e => Object.assign({}, e));
+        return JSON.parse(JSON.stringify(emails));
     }
 
     const _addEmailsEditorEvents = (listDomElement, inputDomElement) => {
